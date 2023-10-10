@@ -19,6 +19,7 @@ nnoremap("p", '"+p')
 nnoremap("P", '"+P')
 
 nmap("<leader>fr", ":%s///gc<left><left><left><left>")
+nmap("<leader>qfr", ":cdo %s///gc<left><left><left><left>")
 
 nnoremap("<leader>fd", "<cmd>find .<CR>")
 nnoremap("<leader>sf", "<cmd>:w!<CR>")
