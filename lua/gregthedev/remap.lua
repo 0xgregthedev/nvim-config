@@ -3,6 +3,7 @@ local keymap = require("gregthedev.keymap")
 local nnoremap = keymap.nnoremap
 local inoremap = keymap.inoremap
 local vnoremap = keymap.vnoremap
+local nmap = keymap.nmap
 
 inoremap("kj", "<Esc>")
 inoremap("KJ", "<Esc>")
@@ -10,13 +11,17 @@ inoremap("KJ", "<Esc>")
 vnoremap("y", '"+y')
 vnoremap("Y", '"+Y')
 
+
+
 nnoremap("yy", '"+yy')
 nnoremap("YY", '"+YY')
 nnoremap("p", '"+p')
 nnoremap("P", '"+P')
 
+nmap("<leader>fr", ":%s///gc<left><left><left><left>")
+
 nnoremap("<leader>fd", "<cmd>find .<CR>")
-nnoremap("<leader>sf", "<cmd>:w<CR>")
+nnoremap("<leader>sf", "<cmd>:w!<CR>")
 nnoremap("<leader>ff", "<cmd>Telescope find_files<CR>")
 nnoremap("<leader>fs", "<cmd>:Telescope live_grep<CR>")
 nnoremap("<leader>fh", "<cmd>:Telescope buffers<CR>")
