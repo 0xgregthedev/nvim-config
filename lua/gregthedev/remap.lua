@@ -3,6 +3,7 @@ local keymap = require("gregthedev.keymap")
 local nnoremap = keymap.nnoremap
 local inoremap = keymap.inoremap
 local vnoremap = keymap.vnoremap
+local nmap = keymap.nmap
 
 inoremap("kj", "<Esc>")
 inoremap("KJ", "<Esc>")
@@ -10,19 +11,28 @@ inoremap("KJ", "<Esc>")
 vnoremap("y", '"+y')
 vnoremap("Y", '"+Y')
 
+
+
 nnoremap("yy", '"+yy')
 nnoremap("YY", '"+YY')
 nnoremap("p", '"+p')
 nnoremap("P", '"+P')
 
+nmap("<leader>fr", ":%s///gc<left><left><left><left>")
+nmap("<leader>qfr", ":cdo %s///gc<left><left><left><left>")
+
 nnoremap("<leader>fd", "<cmd>find .<CR>")
-nnoremap("<leader>sf", "<cmd>:w<CR>")
+nnoremap("<leader>sf", "<cmd>:w!<CR>")
 nnoremap("<leader>ff", "<cmd>Telescope find_files<CR>")
 nnoremap("<leader>fs", "<cmd>:Telescope live_grep<CR>")
 nnoremap("<leader>fh", "<cmd>:Telescope buffers<CR>")
 nnoremap("<leader>bh", "<cmd>:Telescope git_bcommits<CR>")
 nnoremap("<leader>gh", "<cmd>:Telescope git_commits<CR>")
 nnoremap("<leader>gs", "<cmd>:Telescope git_status<CR>")
+nnoremap("<leader>gb", "<cmd>:Telescope git_branches<CR>")
+
+nnoremap("<leader>st", ":!git stage ")
+nnoremap("<leader>gc", ":!git commit -m ''<left>")
 
 nnoremap("<space>fa", "<cmd>:Neoformat<CR>")
 
