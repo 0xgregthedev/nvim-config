@@ -1,5 +1,8 @@
 -- Mappings.
+--
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+--
+
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
@@ -29,8 +32,58 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>fa', function() vim.lsp.buf.format { async = true } end, bufopts)
+  vim.keymap.set('n', '<space>qf', function()
+  local qf_exists = false
+  for _, win in pairs(vim.fn.getwininfo()) do
+    if win["quickfix"] == 1 then
+      qf_exists = true
+    end
+  end
+  if qf_exists == true then
+    vim.cmd "cclose"
+    return
+  end
+  --if not vim.tbl_isempty(vim.fn.getqflist()) then
+  vim.diagnostic.setqflist({}, 'r', {
+    title = 'Diagnostics',
+    severity_sort = true,
+  })
+  
+ --end
 end
+)
+end
+
+--vim.api.nvim_create_autocmd( "InsertEnter", {
+---- or vim.api.nvim_create_autocmd({"BufNew", "TextChanged", "TextChangedI", "TextChangedP", "TextChangedT"}, {
+--  callback = function(args)
+--    vim.diagnostic.disable(args.buf)
+--  end
+--})
+
+--local debounce = 1500
+--local hit = false
+--
+--local timer = vim.uv.new_timer()
+--timer:start(debounce, debounce, vim.schedule_wrap(function()
+-- if not hit then
+--  vim.diagnostic.setqflist({}, 'r', {
+--    title = 'Diagnostics',
+--    severity_sort = true,
+--  })
+-- vim.cmd("wincmd k")
+-- end
+--
+-- hit = false
+--
+--end))
+--
+--
+--vim.api.nvim_create_autocmd({"TextChanged", "TextChangedI", "TextChangedP"}, {
+--  callback = function(args)
+--    hit = true
+--  end
+--})
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
@@ -54,6 +107,12 @@ lspconfig['gopls'].setup{
     root_dir = lspconfig.util.root_pattern('go.mod'),
     flags = lsp_flags,
 }
+lspconfig['graphql'].setup{
+    on_attach = on_attach,
+    root_dir = lspconfig.util.root_pattern('schema.graphql', 'tsconfig.json', 'turbo.json'),
+    filetypes = { "graphql", "typescriptreact", "javascriptreact", "typescript" },
+    flags = lsp_flags,
+}
 
 --lspconfig['graphql'].setup{
 --    on_attach = on_attach,
@@ -63,6 +122,10 @@ lspconfig['gopls'].setup{
 lspconfig['rust_analyzer'].setup{
     on_attach = on_attach,
     root_dir = lspconfig.util.root_pattern('Cargo.toml', 'Cargo.lock', 'main.rs', 'lib.rs'),
+    diagnostics = {
+        enable = true,
+    },
     -- Server-specific settings...
     flags = lsp_flags,
 }
+

@@ -3,7 +3,6 @@ local keymap = require("gregthedev.keymap")
 local nnoremap = keymap.nnoremap
 local inoremap = keymap.inoremap
 local vnoremap = keymap.vnoremap
-local tnoremap = keymap.tnoremap
 
 inoremap("kj", "<Esc>")
 inoremap("KJ", "<Esc>")
@@ -18,10 +17,23 @@ nnoremap("P", '"+P')
 
 nnoremap("<leader>fd", "<cmd>find .<CR>")
 nnoremap("<leader>sf", "<cmd>:w<CR>")
-nnoremap("<leader>ff", "<cmd>:Telescope find_files<CR>")
+nnoremap("<leader>ff", "<cmd>Telescope find_files<CR>")
 nnoremap("<leader>fs", "<cmd>:Telescope live_grep<CR>")
 nnoremap("<leader>fh", "<cmd>:Telescope buffers<CR>")
-nnoremap("<leader>gh", "<cmd>:Telescope git_bcommits<CR>")
+nnoremap("<leader>bh", "<cmd>:Telescope git_bcommits<CR>")
+nnoremap("<leader>gh", "<cmd>:Telescope git_commits<CR>")
+nnoremap("<leader>gs", "<cmd>:Telescope git_status<CR>")
+
+nnoremap("<space>fa", "<cmd>:Neoformat<CR>")
+
+local fterm = require("FTerm")
+
+vim.keymap.set("n", "<leader>ft", fterm.toggle)
+vim.keymap.set("t", "<leader>ft", fterm.toggle)
+
+
+nnoremap("<leader>td", "<cmd>:Telescope diagnostics<CR>")
+nnoremap("<leader>bw", "<cmd>wincmd p<CR>")
 
 nnoremap("<leader>bb", "<cmd>:b#<CR>")
 
@@ -29,7 +41,6 @@ vim.keymap.set("n", "<leader>ch", "<cmd>:NeoChisel start<CR>")
 vim.keymap.set("n", "<C-c>", "<cmd>:NeoChisel exit<CR>")
 vim.keymap.set("t", "<C-c>", "<cmd>:NeoChisel exit<CR>")
 
-local fterm = require("FTerm")  
 
 vim.api.nvim_create_user_command('NeoChisel', 
   function(opts)
