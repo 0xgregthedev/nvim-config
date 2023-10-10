@@ -28,6 +28,10 @@ nnoremap("<leader>fh", "<cmd>:Telescope buffers<CR>")
 nnoremap("<leader>bh", "<cmd>:Telescope git_bcommits<CR>")
 nnoremap("<leader>gh", "<cmd>:Telescope git_commits<CR>")
 nnoremap("<leader>gs", "<cmd>:Telescope git_status<CR>")
+nnoremap("<leader>gb", "<cmd>:Telescope git_branches<CR>")
+
+nnoremap("<leader>st", ":!git stage ")
+nnoremap("<leader>gc", ":!git commit -m ''<left>")
 
 nnoremap("<space>fa", "<cmd>:Neoformat<CR>")
 
