@@ -1,4 +1,5 @@
 local keymap = require("gregthedev.keymap")
+local fterm = require("FTerm")
 
 local nnoremap = keymap.nnoremap
 local inoremap = keymap.inoremap
@@ -27,16 +28,23 @@ nnoremap("<leader>ff", "<cmd>Telescope find_files<CR>")
 nnoremap("<leader>fs", "<cmd>:Telescope live_grep<CR>")
 nnoremap("<leader>fh", "<cmd>:Telescope buffers<CR>")
 nnoremap("<leader>bh", "<cmd>:Telescope git_bcommits<CR>")
-nnoremap("<leader>gh", "<cmd>:Telescope git_commits<CR>")
-nnoremap("<leader>gs", "<cmd>:Telescope git_status<CR>")
-nnoremap("<leader>gb", "<cmd>:Telescope git_branches<CR>")
 
-nnoremap("<leader>st", ":!git stage ")
-nnoremap("<leader>gc", ":!git commit -m ''<left>")
+vim.api.nvim_create_user_command('LazyGit', 
+  function(opts)
+    local functions = {
+      start = fterm.run("lazygit"),
+      close = fterm.close,
+      exit = fterm.exit
+    }
+  end,
+  { nargs = 0, bang = true})
+
+
+nnoremap("<leader>gg", "<cmd>:LazyGit<CR>")
+
 
 nnoremap("<space>fa", "<cmd>:Neoformat<CR>")
 
-local fterm = require("FTerm")
 
 vim.keymap.set("n", "<leader>ft", fterm.toggle)
 vim.keymap.set("t", "<leader>ft", fterm.toggle)
