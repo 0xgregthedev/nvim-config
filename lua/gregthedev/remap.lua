@@ -20,7 +20,7 @@ nnoremap("p", '"+p')
 nnoremap("P", '"+P')
 
 nmap("<leader>fr", ":%s///gc<left><left><left><left>")
-nmap("<leader>qfr", ":cdo %s///gc<left><left><left><left>")
+nmap("<leader>qfr", ":cdo %s///cg<left><left><left><left>")
 
 nnoremap("<leader>fd", "<cmd>find .<CR>")
 nnoremap("<leader>sf", "<cmd>:w!<CR>")
@@ -28,6 +28,20 @@ nnoremap("<leader>ff", "<cmd>Telescope find_files<CR>")
 nnoremap("<leader>fs", "<cmd>:Telescope live_grep<CR>")
 nnoremap("<leader>fh", "<cmd>:Telescope buffers<CR>")
 nnoremap("<leader>bh", "<cmd>:Telescope git_bcommits<CR>")
+nnoremap("<leader>fc", "<cmd>:ForgeCoverage<CR>")
+nnoremap("<leader>cd", ":cd ")
+nnoremap("<leader>so", "<cmd>:so<CR>")
+
+vim.api.nvim_create_user_command('ForgeCoverage', 
+  function(opts)
+    local functions = {
+      start = fterm.run("forge coverage --report summary --report lcov && lcov -o lcov.info --remove lcov.info --rc lcov_branch_coverage=1 --rc lcov_function_coverage=1 \"test/*\" && genhtml lcov.info -o html --function-coverage --branch-coverage && google-chrome --new-window html/index.html"),
+      close = fterm.close,
+      exit = fterm.exit
+    }
+  end,
+  { nargs = 0, bang = true})
+
 
 vim.api.nvim_create_user_command('LazyGit', 
   function(opts)

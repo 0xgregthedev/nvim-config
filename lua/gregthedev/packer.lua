@@ -37,7 +37,7 @@ return require('packer').startup(function(use)
             requires = {'junegunn/fzf'}
         }
         use {'neoclide/coc.nvim', branch = 'release'}
-        
+        use 'nvim-tree/nvim-web-devicons'
         use {
                 'nvim-lualine/lualine.nvim',
                 requires = { 
@@ -52,5 +52,16 @@ return require('packer').startup(function(use)
         use {
                 'nvim-treesitter/nvim-treesitter',
                 run = ':TSUpdate'
+        }
+        use {
+          'pwntester/octo.nvim',
+          requires = {
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope.nvim',
+            'nvim-tree/nvim-web-devicons',
+          },
+          config = function ()
+            require"octo".setup()
+          end
         }
 end)
