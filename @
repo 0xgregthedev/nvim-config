@@ -1,6 +1,0 @@
-require("gregthedev.set")
-require("gregthedev.remap")
-require("gregthedev.packer")
-require("gregthedev.lsp")
-print("Loading...")
-print("Welcome To The Shadow Realm")

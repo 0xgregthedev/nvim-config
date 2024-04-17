@@ -12,8 +12,6 @@ inoremap("KJ", "<Esc>")
 vnoremap("y", '"+y')
 vnoremap("Y", '"+Y')
 
-
-
 nnoremap("yy", '"+yy')
 nnoremap("YY", '"+YY')
 nnoremap("p", '"+p')
@@ -32,37 +30,29 @@ nnoremap("<leader>fc", "<cmd>:ForgeCoverage<CR>")
 nnoremap("<leader>cd", ":cd ")
 nnoremap("<leader>so", "<cmd>:so<CR>")
 
-vim.api.nvim_create_user_command('ForgeCoverage', 
-  function(opts)
+vim.api.nvim_create_user_command('ForgeCoverage', function(opts)
     local functions = {
-      start = fterm.run("forge coverage --report summary --report lcov && lcov -o lcov.info --remove lcov.info --rc lcov_branch_coverage=1 --rc lcov_function_coverage=1 \"test/*\" && genhtml lcov.info -o html --function-coverage --branch-coverage && google-chrome --new-window html/index.html"),
-      close = fterm.close,
-      exit = fterm.exit
+        start = fterm.run(
+            "forge coverage --report summary --report lcov && lcov -o lcov.info --remove lcov.info --rc lcov_branch_coverage=1 --rc lcov_function_coverage=1 \"test/*\" && genhtml lcov.info -o html --function-coverage --branch-coverage && google-chrome --new-window html/index.html"),
+        close = fterm.close,
+        exit = fterm.exit
     }
-  end,
-  { nargs = 0, bang = true})
+end, {nargs = 0, bang = true})
 
-
-vim.api.nvim_create_user_command('LazyGit', 
-  function(opts)
+vim.api.nvim_create_user_command('LazyGit', function(opts)
     local functions = {
-      start = fterm.run("lazygit"),
-      close = fterm.close,
-      exit = fterm.exit
+        start = fterm.run("lazygit"),
+        close = fterm.close,
+        exit = fterm.exit
     }
-  end,
-  { nargs = 0, bang = true})
-
+end, {nargs = 0, bang = true})
 
 nnoremap("<leader>gg", "<cmd>:LazyGit<CR>")
 
-
 nnoremap("<space>fa", "<cmd>:Neoformat<CR>")
-
 
 vim.keymap.set("n", "<leader>ft", fterm.toggle)
 vim.keymap.set("t", "<leader>ft", fterm.toggle)
-
 
 nnoremap("<leader>td", "<cmd>:Telescope diagnostics<CR>")
 nnoremap("<leader>bw", "<cmd>wincmd p<CR>")
@@ -73,41 +63,35 @@ vim.keymap.set("n", "<leader>ch", "<cmd>:NeoChisel start<CR>")
 vim.keymap.set("n", "<C-c>", "<cmd>:NeoChisel exit<CR>")
 vim.keymap.set("t", "<C-c>", "<cmd>:NeoChisel exit<CR>")
 
-
-vim.api.nvim_create_user_command('NeoChisel', 
-  function(opts)
+vim.api.nvim_create_user_command('NeoChisel', function(opts)
     local functions = {
-      start = ChiselStart,
-      close = fterm.close,
-      exit = fterm.exit
+        start = ChiselStart,
+        close = fterm.close,
+        exit = fterm.exit
     }
     functions[opts.fargs[1]]()
-  end,
-  { nargs = 1, bang = true})
-
+end, {nargs = 1, bang = true})
 
 function ChiselStart()
 
-  local file = vim.api.nvim_buf_get_name(0)
+    local file = vim.api.nvim_buf_get_name(0)
 
-  local cmd = ""
-  for line in io.lines(file) do 
+    local cmd = ""
+    for line in io.lines(file) do
 
-    if line:find("SPDX%-") or line:find("pragma solidity") then
-      goto continue
+        if line:find("SPDX%-") or line:find("pragma solidity") then
+            goto continue
+        end
+
+        cmd = cmd .. line
+
+        ::continue::
     end
+    cmd = cmd .. "contract Repl{}"
 
-    cmd = cmd .. line 
+    local fterm = require("FTerm")
+    fterm.run("chisel")
 
-    ::continue::
-  end
-  cmd = cmd .. "contract Repl{}"
-
-  local fterm = require("FTerm")  
-  fterm.run("chisel")
-
-  fterm.run(cmd)
+    fterm.run(cmd)
 end
-
-
 

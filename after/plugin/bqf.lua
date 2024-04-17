@@ -2,22 +2,20 @@ local fn = vim.fn
 local cmd = vim.cmd
 local api = vim.api
 
-
-
 -- https://github.com/mhinz/vim-grepper
---vim.g.grepper = {tools = {'rg', 'grep'}, searchreg = 1}
---cmd(([[
+-- vim.g.grepper = {tools = {'rg', 'grep'}, searchreg = 1}
+-- cmd(([[
 --    aug Grepper
 --        au!
 --        au User Grepper ++nested %s
 --    aug END
---]]):format([[call setqflist([], 'r', {'context': {'bqf': {'pattern_hl': '\%#' . getreg('/')}}})]]))
+-- ]]):format([[call setqflist([], 'r', {'context': {'bqf': {'pattern_hl': '\%#' . getreg('/')}}})]]))
 --
 ---- try `gsiw` under word
---cmd([[
+-- cmd([[
 --    nmap gs  <plug>(GrepperOperator)
 --    xmap gs  <plug>(GrepperOperator)
---]])
+-- ]])
 
 -- https://github.com/neoclide/coc.nvim
 -- if you use coc-fzf, you should disable its CocLocationsChange event

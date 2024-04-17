@@ -1,6 +1,6 @@
+require("gregthedev.lazy")
 require("gregthedev.set")
 require("gregthedev.remap")
-require("gregthedev.packer")
 require("gregthedev.keymap")
 
 

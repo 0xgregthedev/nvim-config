@@ -11,7 +11,7 @@ vim.opt.smartindent = true
 vim.opt.wrap = true
 vim.g.mapleader = " "
 vim.diagnostic.config({
-  float = {
-    source = "always",  -- Or "if_many"
-  },
+    float = {
+        source = "always" -- Or "if_many"
+    }
 })
